@@ -74,6 +74,54 @@ EXCLUDED_EMAIL_DOMAINS = [
     "blogger.com",
 ]
 
+# ============================================================
+# Website filtering
+# ============================================================
+
+EXCLUDED_WEBSITE_DOMAINS = [
+    "fiverr.com",
+    "upwork.com",
+    "freelancer.com",
+    "peopleperhour.com",
+
+    "facebook.com",
+    "instagram.com",
+    "linkedin.com",
+    "youtube.com",
+    "twitter.com",
+    "x.com",
+    "reddit.com",
+
+    "amazon.com",
+    "amazon.ae",
+    "noon.com",
+
+    "wikipedia.org",
+    "wikimedia.org",
+
+    "semrush.com",
+    "similarweb.com",
+    "alexa.com",
+
+    "prnews.io",
+    "feedspot.com",
+]
+
+EXCLUDED_WEBSITE_SIGNALS = [
+    "guest post marketplace",
+    "guest posting marketplace",
+    "link building service",
+    "link-building service",
+    "seo agency",
+    "seo services",
+    "guest posting service",
+    "buy guest posts",
+    "buy guest post",
+    "guest post packages",
+    "guest post pricing",
+    "sponsored post packages",
+]
+
 INCLUDE_LINK_KEYWORDS = [
     "contact",
     "contact-us",
@@ -760,3 +808,315 @@ def get_website_text(url):
         )
 
         return ""
+
+    # ============================================================
+# Website filtering helpers
+# ============================================================
+
+def get_domain(url):
+    """
+    Returns the normalized domain name.
+    """
+
+    domain = urlparse(url).netloc.lower()
+
+    if domain.startswith("www."):
+        domain = domain[4:]
+
+    return domain
+
+
+def is_excluded_website_domain(url):
+    """
+    Checks whether the website belongs to a known
+    marketplace, social platform, aggregator, or
+    major e-commerce platform.
+    """
+
+    domain = get_domain(url)
+
+    for excluded_domain in EXCLUDED_WEBSITE_DOMAINS:
+
+        excluded_domain = excluded_domain.lower()
+
+        if (
+            domain == excluded_domain
+            or domain.endswith("." + excluded_domain)
+        ):
+            return True
+
+    return False
+
+
+def detect_website_type(title, url, website_text):
+    """
+    Classifies a website into a simple category.
+
+    Possible values:
+
+        publisher
+        marketplace
+        agency
+        directory
+        ecommerce
+        social
+        unknown
+    """
+
+    domain = get_domain(url)
+
+    combined_text = " ".join([
+        title or "",
+        url or "",
+        website_text or "",
+    ]).lower()
+
+    # --------------------------------------------------------
+    # Known excluded domains
+    # --------------------------------------------------------
+
+    if is_excluded_website_domain(url):
+
+        if any(
+            platform in domain
+            for platform in [
+                "fiverr.com",
+                "upwork.com",
+                "freelancer.com",
+                "peopleperhour.com",
+            ]
+        ):
+            return "marketplace"
+
+        if any(
+            platform in domain
+            for platform in [
+                "facebook.com",
+                "instagram.com",
+                "linkedin.com",
+                "youtube.com",
+                "twitter.com",
+                "x.com",
+                "reddit.com",
+            ]
+        ):
+            return "social"
+
+        if any(
+            platform in domain
+            for platform in [
+                "amazon.com",
+                "amazon.ae",
+                "noon.com",
+            ]
+        ):
+            return "ecommerce"
+
+        if any(
+            platform in domain
+            for platform in [
+                "wikipedia.org",
+                "wikimedia.org",
+                "feedspot.com",
+                "prnews.io",
+            ]
+        ):
+            return "directory"
+
+        return "unknown"
+
+    # --------------------------------------------------------
+    # Marketplace / link building
+    # --------------------------------------------------------
+
+    marketplace_signals = [
+        "guest post marketplace",
+        "guest posting marketplace",
+        "link building service",
+        "link-building service",
+        "guest posting service",
+        "buy guest posts",
+        "buy guest post",
+        "guest post packages",
+        "guest post pricing",
+        "sponsored post packages",
+    ]
+
+    if any(
+        signal in combined_text
+        for signal in marketplace_signals
+    ):
+        return "marketplace"
+
+    # --------------------------------------------------------
+    # SEO / digital marketing agency
+    # --------------------------------------------------------
+
+    agency_signals = [
+        "seo agency",
+        "seo services",
+        "digital marketing agency",
+        "link building agency",
+        "search engine optimization agency",
+    ]
+
+    if any(
+        signal in combined_text
+        for signal in agency_signals
+    ):
+        return "agency"
+
+    # --------------------------------------------------------
+    # Directory / aggregator
+    # --------------------------------------------------------
+
+    directory_signals = [
+        "directory of websites",
+        "list of guest post sites",
+        "guest posting sites",
+        "top guest post sites",
+        "best guest posting sites",
+        "list of blogs",
+        "website directory",
+    ]
+
+    if any(
+        signal in combined_text
+        for signal in directory_signals
+    ):
+        return "directory"
+
+    # --------------------------------------------------------
+    # E-commerce
+    # --------------------------------------------------------
+
+    ecommerce_signals = [
+        "add to cart",
+        "shopping cart",
+        "checkout",
+        "buy now",
+        "shop now",
+        "product catalog",
+    ]
+
+    ecommerce_hits = sum(
+        1
+        for signal in ecommerce_signals
+        if signal in combined_text
+    )
+
+    if ecommerce_hits >= 2:
+        return "ecommerce"
+
+    # --------------------------------------------------------
+    # Publisher signals
+    # --------------------------------------------------------
+
+    publisher_signals = [
+        "news",
+        "magazine",
+        "journal",
+        "blog",
+        "articles",
+        "latest news",
+        "editorial",
+        "contributors",
+        "write for us",
+        "guest post",
+        "submit article",
+    ]
+
+    publisher_hits = sum(
+        1
+        for signal in publisher_signals
+        if signal in combined_text
+    )
+
+    if publisher_hits >= 2:
+        return "publisher"
+
+    return "unknown"
+
+
+def is_acceptable_website_type(
+    title,
+    url,
+    website_text
+):
+    """
+    Determines whether the website is suitable for
+    further guest-post processing.
+
+    Returns:
+
+        accepted: bool
+        website_type: str
+        reason: str
+    """
+
+    website_type = detect_website_type(
+        title,
+        url,
+        website_text
+    )
+
+    if website_type == "marketplace":
+
+        return (
+            False,
+            website_type,
+            "Website is a guest-post or link-building marketplace."
+        )
+
+    if website_type == "agency":
+
+        return (
+            False,
+            website_type,
+            "Website is an SEO or digital marketing agency."
+        )
+
+    if website_type == "directory":
+
+        return (
+            False,
+            website_type,
+            "Website is an aggregator or directory rather than a publisher."
+        )
+
+    if website_type == "ecommerce":
+
+        return (
+            False,
+            website_type,
+            "Website appears to be an e-commerce platform."
+        )
+
+    if website_type == "social":
+
+        return (
+            False,
+            website_type,
+            "Website is a social media platform."
+        )
+
+    if website_type == "publisher":
+
+        return (
+            True,
+            website_type,
+            "Website appears to be a content publisher."
+        )
+
+    # --------------------------------------------------------
+    # Unknown websites are not automatically rejected.
+    #
+    # Relevance analysis may still determine that they
+    # are legitimate publishers.
+    # --------------------------------------------------------
+
+    return (
+        True,
+        website_type,
+        "Website type could not be determined automatically."
+    )
