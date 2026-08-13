@@ -9,47 +9,41 @@ from scraper import (
     scrape_relevant_pages,
     validate_emails,
     get_website_text,
-    get_best_contact_emails
 )
 
 from search import (
     create_search_query,
     get_search_results,
-    TavilySearchProvider
+    TavilySearchProvider,
 )
 
 from logger import logger
 from relevance import check_website_relevance
 
 
+# ============================================================
+# PARSE RELEVANCE RESULT
+# ============================================================
+
 def parse_relevance_result(result):
     """
-    Extracts relevance score, industry match,
-    guest post potential, and reason from AI response.
+    Extracts:
+        - relevance score
+        - industry match
+        - geography match
+        - guest post potential
+        - analysis method
+        - reason
     """
+
+    # --------------------------------------------------------
+    # SCORE
+    # --------------------------------------------------------
 
     score_match = re.search(
         r"Relevance score:\s*(\d+)",
         result,
-        re.IGNORECASE
-    )
-
-    industry_match = re.search(
-        r"Industry match:\s*(High|Medium|Low)",
-        result,
-        re.IGNORECASE
-    )
-
-    potential_match = re.search(
-        r"Guest post potential:\s*(High|Medium|Low|Medium-High|High-Medium)",
-        result,
-        re.IGNORECASE
-    )
-
-    reason_match = re.search(
-        r"Reason:\s*(.+)",
-        result,
-        re.IGNORECASE
+        re.IGNORECASE,
     )
 
     score = (
@@ -58,23 +52,79 @@ def parse_relevance_result(result):
         else 0
     )
 
+    # --------------------------------------------------------
+    # INDUSTRY
+    # --------------------------------------------------------
+
+    industry_match = re.search(
+        r"Industry match:\s*(High|Medium|Low)",
+        result,
+        re.IGNORECASE,
+    )
+
     industry_match_value = (
         industry_match.group(1).capitalize()
         if industry_match
         else "Low"
     )
 
-    if potential_match:
+    # --------------------------------------------------------
+    # GEOGRAPHY
+    # --------------------------------------------------------
 
-        potential = potential_match.group(1).lower()
+    geography_match = re.search(
+        r"Geography match:\s*(High|Medium|Low)",
+        result,
+        re.IGNORECASE,
+    )
 
-        if potential in ["medium-high", "high-medium"]:
-            potential = "High"
-        else:
-            potential = potential.capitalize()
+    geography_match_value = (
+        geography_match.group(1).capitalize()
+        if geography_match
+        else "Low"
+    )
 
-    else:
-        potential = "Low"
+    # --------------------------------------------------------
+    # GUEST POST POTENTIAL
+    # --------------------------------------------------------
+
+    potential_match = re.search(
+        r"Guest post potential:\s*(High|Medium|Low)",
+        result,
+        re.IGNORECASE,
+    )
+
+    potential = (
+        potential_match.group(1).capitalize()
+        if potential_match
+        else "Low"
+    )
+
+    # --------------------------------------------------------
+    # ANALYSIS METHOD
+    # --------------------------------------------------------
+
+    method_match = re.search(
+        r"Analysis method:\s*(AI|Heuristic|Unavailable)",
+        result,
+        re.IGNORECASE,
+    )
+
+    analysis_method = (
+        method_match.group(1).capitalize()
+        if method_match
+        else "AI"
+    )
+
+    # --------------------------------------------------------
+    # REASON
+    # --------------------------------------------------------
+
+    reason_match = re.search(
+        r"Reason:\s*(.+)",
+        result,
+        re.IGNORECASE,
+    )
 
     reason = (
         reason_match.group(1).strip()
@@ -85,17 +135,76 @@ def parse_relevance_result(result):
     return (
         score,
         industry_match_value,
+        geography_match_value,
         potential,
-        reason
+        analysis_method,
+        reason,
     )
+
+
+# ============================================================
+# QUALIFICATION LOGIC
+# ============================================================
+
+def is_qualified(
+    score,
+    industry_match,
+    geography_match,
+    guest_post_potential,
+    analysis_method,
+):
+    """
+    Determines whether the website is a qualified
+    guest-post opportunity.
+
+    The geography requirement is important because
+    the campaign has a target geography.
+
+    Heuristic results are treated more conservatively
+    than AI results.
+    """
+
+    # --------------------------------------------------------
+    # BASIC REQUIREMENTS
+    # --------------------------------------------------------
+
+    if industry_match != "High":
+        return False
+
+    if geography_match == "Low":
+        return False
+
+    if guest_post_potential != "High":
+        return False
+
+    # --------------------------------------------------------
+    # SCORE REQUIREMENT
+    # --------------------------------------------------------
+
+    if analysis_method == "Heuristic":
+
+        # Conservative fallback.
+        return score >= 75
+
+    if analysis_method == "Unavailable":
+
+        return False
+
+    # AI result
+    return score >= 70
 
 
 # ============================================================
 # GET SEARCH PARAMETERS
 # ============================================================
 
-industry = input("Enter industry: ")
-geography = input("Enter geography: ")
+industry = input(
+    "Enter industry: "
+).strip()
+
+geography = input(
+    "Enter geography: "
+).strip()
 
 
 # ============================================================
@@ -104,7 +213,7 @@ geography = input("Enter geography: ")
 
 query = create_search_query(
     industry,
-    geography
+    geography,
 )
 
 print("\nSearch query:")
@@ -130,10 +239,12 @@ print("\nSearching the web...")
 
 results = get_search_results(
     query,
-    search_provider
+    search_provider,
 )
 
-print(f"\nFound {len(results)} results.")
+print(
+    f"\nFound {len(results)} results."
+)
 
 logger.info(
     f"Search completed. Results found: {len(results)}"
@@ -153,26 +264,47 @@ qualified_sites = []
 
 for result in results:
 
-    title = result["title"]
-    url = result["url"]
+    title = result.get(
+        "title",
+        "Untitled website",
+    )
 
-    print("\n" + "=" * 60)
-    print(f"Title: {title}")
-    print(f"URL: {url}")
-    print("=" * 60)
+    url = result.get(
+        "url",
+        "",
+    )
+
+    print(
+        "\n" + "=" * 60
+    )
+
+    print(
+        f"Title: {title}"
+    )
+
+    print(
+        f"URL: {url}"
+    )
+
+    print(
+        "=" * 60
+    )
 
     logger.info(
         f"Processing website: {url}"
     )
 
+    # --------------------------------------------------------
+    # GET WEBSITE CONTENT
+    # --------------------------------------------------------
 
-    # ========================================================
-    # GET WEBSITE TEXT
-    # ========================================================
+    print(
+        "\nGetting website content..."
+    )
 
-    print("\nGetting website content...")
-
-    website_text = get_website_text(url)
+    website_text = get_website_text(
+        url
+    )
 
     if not website_text:
 
@@ -182,39 +314,46 @@ for result in results:
         )
 
         logger.info(
-            f"AI relevance skipped: {url}"
+            f"Website content unavailable: {url}"
         )
 
         continue
 
+    # --------------------------------------------------------
+    # AI RELEVANCE ANALYSIS
+    # --------------------------------------------------------
 
-    # ========================================================
-    # AI RELEVANCE CHECK
-    # ========================================================
-
-    print("\nAI relevance analysis...")
+    print(
+        "\nAI relevance analysis..."
+    )
 
     relevance_result = check_website_relevance(
         title,
         url,
         industry,
         geography,
-        website_text
+        website_text,
     )
 
-    print("\nAI Relevance Result:")
-    print(relevance_result)
+    print(
+        "\nAI Relevance Result:"
+    )
 
+    print(
+        relevance_result
+    )
 
-    # ========================================================
-    # PARSE AI RESULT
-    # ========================================================
+    # --------------------------------------------------------
+    # PARSE RESULT
+    # --------------------------------------------------------
 
     (
         score,
         industry_match,
+        geography_match,
         guest_post_potential,
-        reason
+        analysis_method,
+        reason,
     ) = parse_relevance_result(
         relevance_result
     )
@@ -229,8 +368,18 @@ for result in results:
     )
 
     print(
+        f"Parsed geography match: "
+        f"{geography_match}"
+    )
+
+    print(
         f"Parsed guest post potential: "
         f"{guest_post_potential}"
+    )
+
+    print(
+        f"Analysis method: "
+        f"{analysis_method}"
     )
 
     print(
@@ -238,15 +387,19 @@ for result in results:
         f"{reason}"
     )
 
+    # --------------------------------------------------------
+    # QUALIFICATION
+    # --------------------------------------------------------
 
-    # ========================================================
-    # QUALIFICATION CHECK
-    # ========================================================
+    qualified = is_qualified(
+        score,
+        industry_match,
+        geography_match,
+        guest_post_potential,
+        analysis_method,
+    )
 
-    if (
-        score < 70
-        or guest_post_potential not in ("High", "Medium")
-    ):
+    if not qualified:
 
         print(
             "\nSkipping website - "
@@ -256,167 +409,182 @@ for result in results:
         logger.info(
             f"Website skipped: {url} | "
             f"Score: {score} | "
-            f"Potential: {guest_post_potential}"
+            f"Industry: {industry_match} | "
+            f"Geography: {geography_match} | "
+            f"Potential: {guest_post_potential} | "
+            f"Method: {analysis_method}"
         )
 
         continue
 
-
     print(
-        "\nWebsite passed AI relevance check."
+        "\nWebsite passed relevance check."
     )
 
+    # --------------------------------------------------------
+    # SCRAPE WEBSITE EMAILS
+    # --------------------------------------------------------
 
-    # ========================================================
-    # SCRAPE WEBSITE
-    # ========================================================
+    print(
+        "\nScraping website..."
+    )
 
-    print("\nScraping website...")
-
-    emails = scrape_website(url)
+    emails = scrape_website(
+        url
+    )
 
     print(
         "\nEmails found:",
         emails
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # EXTRACT LINKS
-    # ========================================================
+    # --------------------------------------------------------
 
-    print("\nExtracting links...")
+    print(
+        "\nExtracting links..."
+    )
 
-    links = extract_links(url)
+    try:
+
+        links = extract_links(
+            url
+        )
+
+    except Exception as e:
+
+        print(
+            f"Could not extract links: {e}"
+        )
+
+        links = []
 
     print(
         f"Links found: {len(links)}"
     )
 
-    logger.info(
-        f"Links extracted: {url} | "
-        f"Links found: {len(links)}"
-    )
-
-
-    # ========================================================
+    # --------------------------------------------------------
     # FIND RELEVANT LINKS
-    # ========================================================
+    # --------------------------------------------------------
 
     relevant_links = find_relevant_links(
         links
     )
 
-    print("\nRelevant links:")
+    print(
+        "\nRelevant links:"
+    )
 
     for link in relevant_links:
-        print("-", link)
+
+        print(
+            "-",
+            link
+        )
 
     logger.info(
         f"Relevant links found: "
         f"{len(relevant_links)}"
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # SCRAPE RELEVANT PAGES
-    # ========================================================
+    # --------------------------------------------------------
 
     page_emails = scrape_relevant_pages(
         relevant_links
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # COLLECT ALL EMAILS
-    # ========================================================
+    # --------------------------------------------------------
 
-    all_page_emails = []
+    all_emails = []
 
-    for page_email_list in page_emails.values():
-
-        all_page_emails.extend(
-            page_email_list
-        )
-
-
-    # Include homepage emails
-
-    all_page_emails.extend(
+    all_emails.extend(
         emails
     )
 
+    for page_email_list in page_emails.values():
 
-    # Remove duplicates
+        all_emails.extend(
+            page_email_list
+        )
 
-    all_page_emails = list(
-        set(all_page_emails)
+    # --------------------------------------------------------
+    # REMOVE DUPLICATES
+    # --------------------------------------------------------
+
+    all_emails = list(
+        set(all_emails)
     )
 
-
-    # ========================================================
+    # --------------------------------------------------------
     # VALIDATE EMAILS
-    # ========================================================
+    # --------------------------------------------------------
 
-    valid_emails, excluded_emails = get_best_contact_emails(
-    all_page_emails,
-    max_emails=5
-)
+    valid_emails, excluded_emails = validate_emails(
+        all_emails
+    )
 
-
-    # ========================================================
-    # DISPLAY EMAILS
-    # ========================================================
-
-    print("\nValid contact emails:")
+    print(
+        "\nValid contact emails:"
+    )
 
     for email in valid_emails:
-        print("-", email)
 
+        print(
+            "-",
+            email
+        )
 
-    print("\nExcluded emails:")
+    print(
+        "\nExcluded emails:"
+    )
 
     for email in excluded_emails:
-        print("-", email)
 
+        print(
+            "-",
+            email
+        )
 
     logger.info(
-        f"Email validation completed: {url} | "
+        f"Email validation completed: "
+        f"{url} | "
         f"Valid: {len(valid_emails)} | "
         f"Excluded: {len(excluded_emails)}"
     )
 
+    # --------------------------------------------------------
+    # SAVE QUALIFIED SITE
+    # --------------------------------------------------------
 
-    # ========================================================
-    # STORE QUALIFIED WEBSITE
-    # ========================================================
-
-    qualified_sites.append({
-
-        "title": title,
-
-        "url": url,
-
-        "score": score,
-
-        "industry_match": industry_match,
-
-        "potential": guest_post_potential,
-
-        "reason": reason,
-
-        "emails": valid_emails
-
-    })
-
+    qualified_sites.append(
+        {
+            "title": title,
+            "url": url,
+            "score": score,
+            "industry_match": industry_match,
+            "geography_match": geography_match,
+            "potential": guest_post_potential,
+            "analysis_method": analysis_method,
+            "reason": reason,
+            "emails": valid_emails,
+        }
+    )
 
     print(
         "\nQualification: QUALIFIED"
     )
 
     logger.info(
-        f"Website qualified: {url} | "
+        f"Website qualification: {url} | "
+        f"Status: QUALIFIED | "
         f"Score: {score} | "
+        f"Industry: {industry_match} | "
+        f"Geography: {geography_match} | "
         f"Potential: {guest_post_potential}"
     )
 
@@ -426,9 +594,18 @@ for result in results:
 # ============================================================
 
 print("\n")
-print("=" * 60)
-print("QUALIFIED GUEST POST OPPORTUNITIES")
-print("=" * 60)
+
+print(
+    "=" * 60
+)
+
+print(
+    "QUALIFIED GUEST POST OPPORTUNITIES"
+)
+
+print(
+    "=" * 60
+)
 
 
 if not qualified_sites:
@@ -462,8 +639,18 @@ else:
         )
 
         print(
+            "Geography Match:",
+            site["geography_match"]
+        )
+
+        print(
             "Guest Post Potential:",
             site["potential"]
+        )
+
+        print(
+            "Analysis Method:",
+            site["analysis_method"]
         )
 
         print(
@@ -478,7 +665,11 @@ else:
         if site["emails"]:
 
             for email in site["emails"]:
-                print("-", email)
+
+                print(
+                    "-",
+                    email
+                )
 
         else:
 
@@ -492,14 +683,19 @@ else:
 # ============================================================
 
 print("\n")
-print("=" * 60)
+
+print(
+    "=" * 60
+)
 
 print(
     f"Total qualified opportunities: "
     f"{len(qualified_sites)}"
 )
 
-print("=" * 60)
+print(
+    "=" * 60
+)
 
 
 # ============================================================
@@ -509,14 +705,14 @@ print("=" * 60)
 with open(
     "results.json",
     "w",
-    encoding="utf-8"
+    encoding="utf-8",
 ) as file:
 
     json.dump(
         qualified_sites,
         file,
         indent=4,
-        ensure_ascii=False
+        ensure_ascii=False,
     )
 
 print(
@@ -532,7 +728,7 @@ with open(
     "results.csv",
     "w",
     newline="",
-    encoding="utf-8"
+    encoding="utf-8",
 ) as file:
 
     fieldnames = [
@@ -540,42 +736,45 @@ with open(
         "url",
         "score",
         "industry_match",
+        "geography_match",
         "potential",
+        "analysis_method",
         "reason",
-        "emails"
+        "emails",
     ]
 
     writer = csv.DictWriter(
         file,
-        fieldnames=fieldnames
+        fieldnames=fieldnames,
     )
 
     writer.writeheader()
 
     for site in qualified_sites:
 
-        writer.writerow({
-
-            "title": site["title"],
-
-            "url": site["url"],
-
-            "score": site["score"],
-
-            "industry_match":
-                site["industry_match"],
-
-            "potential":
-                site["potential"],
-
-            "reason":
-                site["reason"],
-
-            "emails":
-                ", ".join(site["emails"])
-
-        })
-
+        writer.writerow(
+            {
+                "title": site["title"],
+                "url": site["url"],
+                "score": site["score"],
+                "industry_match": site[
+                    "industry_match"
+                ],
+                "geography_match": site[
+                    "geography_match"
+                ],
+                "potential": site[
+                    "potential"
+                ],
+                "analysis_method": site[
+                    "analysis_method"
+                ],
+                "reason": site["reason"],
+                "emails": ", ".join(
+                    site["emails"]
+                ),
+            }
+        )
 
 print(
     "Results saved to results.csv"

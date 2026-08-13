@@ -1,50 +1,18 @@
 [
     {
-        "title": "Sports Guest Post | Write for us | Contribute Sports Guest Blog - The Sports Mirror - Sports News, Transfers, Scores | Watch Live Sport",
-        "url": "https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog",
-        "score": 100,
-        "industry_match": "High",
-        "potential": "High",
-        "reason": "Heuristic match based on guest-post signals and target keywords.",
-        "emails": [
-            "vikram@thesportsmirror.com"
-        ]
-    },
-    {
         "title": "Write for Us Travel Guest Post 2026 DxbTourisma | DxbTourisma Best Dubai Travel Company",
         "url": "https://dxbtourisma.com/write-for-us-travel-guest-post",
         "score": 100,
         "industry_match": "High",
+        "geography_match": "High",
         "potential": "High",
-        "reason": "Heuristic match based on guest-post signals and target keywords.",
+        "analysis_method": "Heuristic",
+        "reason": "Strong industry, geography, and guest-post signals were detected.",
         "emails": [
+            "form@dxbtourisma.com",
+            "hello@yoursite.com",
             "info@dxbtourisma.com",
-            "hello@yoursite.com"
-        ]
-    },
-    {
-        "title": "Sports & Gulf Magazine - The source for sports in the gulf",
-        "url": "https://sportsandgulf.ae",
-        "score": 85,
-        "industry_match": "Medium",
-        "potential": "Medium",
-        "reason": "Limited guest-post signals found without AI analysis.",
-        "emails": []
-    },
-    {
-        "title": "Sport news | Football results, fixtures and opinion | The National",
-        "url": "https://www.thenationalnews.com/sport",
-        "score": 85,
-        "industry_match": "Medium",
-        "potential": "Medium",
-        "reason": "Limited guest-post signals found without AI analysis.",
-        "emails": [
-            "advertising@thenationalnews.com",
-            "info@thenationalnews.com",
-            "letters@thenationalnews.com",
-            "dmcelroy@thenationalnews.com",
-            "correction@thenationalnews.com",
-            "newstips@thenationalnews.com"
+            "post@dxbtourisma.com"
         ]
     }
 ]

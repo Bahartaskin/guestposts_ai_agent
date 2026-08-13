@@ -69,6 +69,11 @@ EXCLUDED_LINK_KEYWORDS = [
     "javascript:"
 ]
 
+EXCLUDED_EMAIL_DOMAINS = [
+    "blogspot.com",
+    "blogger.com",
+]
+
 INCLUDE_LINK_KEYWORDS = [
     "contact",
     "contact-us",
@@ -550,14 +555,15 @@ def validate_emails(emails):
 
     for email in emails:
 
-        email = normalize_email(
-            email
-        )
+        email = normalize_email(email)
 
         if not is_valid_email(email):
             continue
 
-        local_part = email.split("@")[0].lower()
+        local_part, domain = email.split("@", 1)
+
+        local_part = local_part.lower()
+        domain = domain.lower()
 
         # ----------------------------------------------------
         # Exclude clearly non-contact emails
@@ -566,6 +572,18 @@ def validate_emails(emails):
         if any(
             keyword in local_part
             for keyword in EXCLUDED_EMAIL_KEYWORDS
+        ):
+
+            excluded_emails.append(email)
+
+        # ----------------------------------------------------
+        # Exclude personal/blog platform email domains
+        # ----------------------------------------------------
+
+        elif any(
+            domain == excluded_domain
+            or domain.endswith("." + excluded_domain)
+            for excluded_domain in EXCLUDED_EMAIL_DOMAINS
         ):
 
             excluded_emails.append(email)

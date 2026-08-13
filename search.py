@@ -58,9 +58,30 @@ EXCLUDED_DOMAINS = [
     "guestpostlinks.net",
     "feedspot.com",
     "brandmajlis.com",
+    "blogspot.com",
+    "blogger.com",
+    "yoursite.com",
+    "example.com",
+    "example.org",
+    "example.net",
 ]
 
-
+EXCLUDED_RESULT_KEYWORDS = [
+    "link building agency",
+    "link building service",
+    "guest posting service",
+    "guest post service",
+    "seo agency",
+    "seo services",
+    "backlink service",
+    "buy backlinks",
+    "sell backlinks",
+    "link building",
+    "example",
+    "test",
+    "sample",
+    "placeholder",
+]
 def create_search_query(industry, geography):
     return (
         f"{industry} blog OR magazine OR news "
@@ -78,7 +99,21 @@ def is_excluded_domain(url):
         for excluded in EXCLUDED_DOMAINS
     )
 
+def is_excluded_result(result):
+    """
+    Detects search results that are likely to be
+    SEO/link-building services rather than publishers.
+    """
 
+    title = result.get("title", "").lower()
+    url = result.get("url", "").lower()
+
+    text = f"{title} {url}"
+
+    return any(
+        keyword in text
+        for keyword in EXCLUDED_RESULT_KEYWORDS
+    )
 def normalize_url(url):
     """
     Converts a URL into a consistent format.
@@ -139,8 +174,16 @@ def get_search_results(query, search_provider):
     results = search_provider.search(query)
     results = remove_duplicate_urls(results)
 
-    return [
-        result
-        for result in results
-        if not is_excluded_domain(result["url"])
-    ]
+    filtered_results = []
+
+    for result in results:
+
+        if is_excluded_domain(result["url"]):
+            continue
+
+        if is_excluded_result(result):
+            continue
+
+        filtered_results.append(result)
+
+    return filtered_results
