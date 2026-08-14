@@ -1198,3 +1198,34 @@
 2026-08-14 14:06:32,611 - INFO - Email validation completed: https://dxbtourisma.com/write-for-us-travel-guest-post | Valid: 4 | Excluded: 0
 2026-08-14 14:06:32,611 - INFO - Best contact emails selected: https://dxbtourisma.com/write-for-us-travel-guest-post | Count: 4
 2026-08-14 14:06:32,611 - INFO - Website qualification: https://dxbtourisma.com/write-for-us-travel-guest-post | Status: QUALIFIED | Score: 90 | Industry: High | Geography: High | Potential: High
+2026-08-14 14:38:21,532 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-14 14:38:24,867 - INFO - Search completed. Results found: 6
+2026-08-14 14:38:24,867 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-14 14:38:26,863 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:38:35,037 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:38:35,046 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 40 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 14:38:35,046 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-14 14:38:35,738 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:38:42,885 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:38:43,156 - INFO - Email extraction: https://sports-star.co.uk/write-for-us | Emails found: 1
+2026-08-14 14:38:43,427 - INFO - Relevant links found: 1
+2026-08-14 14:38:43,563 - INFO - Email extraction: https://sports-star.co.uk/advertise-with-us/ | Emails found: 1
+2026-08-14 14:38:43,563 - INFO - Relevant page processed: https://sports-star.co.uk/advertise-with-us/ | Emails found: 1
+2026-08-14 14:38:43,563 - INFO - Email validation completed: https://sports-star.co.uk/write-for-us | Valid: 1 | Excluded: 0
+2026-08-14 14:38:43,564 - INFO - Best contact emails selected: https://sports-star.co.uk/write-for-us | Count: 1
+2026-08-14 14:38:43,564 - INFO - Website qualification: https://sports-star.co.uk/write-for-us | Status: QUALIFIED | Score: 75 | Industry: High | Geography: Medium | Potential: High
+2026-08-14 14:38:43,564 - INFO - Processing website: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-14 14:38:44,327 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:38:48,503 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:38:48,508 - INFO - Website skipped: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post | Score: 0 | Industry: Low | Geography: Low | Potential: Low | Method: AI
+2026-08-14 14:38:48,508 - INFO - Processing website: https://sportsandgulf.ae/about-us
+2026-08-14 14:38:50,081 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:38:55,213 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:38:55,218 - INFO - Website skipped: https://sportsandgulf.ae/about-us | Score: 95 | Industry: High | Geography: High | Potential: Medium | Method: AI
+2026-08-14 14:38:55,218 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-14 14:38:56,843 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:39:08,779 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:39:08,783 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 60 | Industry: Medium | Geography: High | Potential: High | Method: AI
+2026-08-14 14:39:08,783 - INFO - Processing website: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932
+2026-08-14 14:39:08,915 - ERROR - Request failed while getting website text: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932 | 403 Client Error: Forbidden for url: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932
+2026-08-14 14:39:08,916 - INFO - Website content unavailable: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932

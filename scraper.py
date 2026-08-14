@@ -72,8 +72,31 @@ EXCLUDED_LINK_KEYWORDS = [
 EXCLUDED_EMAIL_DOMAINS = [
     "blogspot.com",
     "blogger.com",
+    "example.com",
+    "example.org",
+    "example.net",
+    "yoursite.com",
+    "yourdomain.com",
+    "domain.com",
+    "test.com",
 ]
 
+EXCLUDED_EMAIL_LOCAL_PARTS = [
+    "test",
+    "testing",
+    "example",
+    "user",
+    "username",
+    "name",
+    "yourname",
+    "firstname",
+    "lastname",
+    "email",
+    "youremail",
+    "your-email",
+    "your_email",
+
+]
 # ============================================================
 # Website filtering
 # ============================================================
@@ -595,7 +618,7 @@ def scrape_relevant_pages(relevant_links):
 def validate_emails(emails):
     """
     Separates useful contact emails from
-    privacy/legal/system emails.
+    privacy/legal/system/placeholder emails.
     """
 
     valid_emails = []
@@ -610,8 +633,8 @@ def validate_emails(emails):
 
         local_part, domain = email.split("@", 1)
 
-        local_part = local_part.lower()
-        domain = domain.lower()
+        local_part = local_part.lower().strip()
+        domain = domain.lower().strip()
 
         # ----------------------------------------------------
         # Exclude clearly non-contact emails
@@ -621,24 +644,46 @@ def validate_emails(emails):
             keyword in local_part
             for keyword in EXCLUDED_EMAIL_KEYWORDS
         ):
-
             excluded_emails.append(email)
+            continue
 
         # ----------------------------------------------------
-        # Exclude personal/blog platform email domains
+        # Exclude placeholder/test local parts
         # ----------------------------------------------------
 
-        elif any(
+        if local_part in EXCLUDED_EMAIL_LOCAL_PARTS:
+            excluded_emails.append(email)
+            continue
+
+        # ----------------------------------------------------
+        # Exclude placeholder/test domains
+        # ----------------------------------------------------
+
+        if any(
             domain == excluded_domain
             or domain.endswith("." + excluded_domain)
             for excluded_domain in EXCLUDED_EMAIL_DOMAINS
         ):
-
             excluded_emails.append(email)
+            continue
 
-        else:
+        # ----------------------------------------------------
+        # Exclude obvious placeholder domains
+        # ----------------------------------------------------
 
-            valid_emails.append(email)
+        if (
+            "example" in domain
+            or "yourdomain" in domain
+            or "yoursite" in domain
+        ):
+            excluded_emails.append(email)
+            continue
+
+        # ----------------------------------------------------
+        # Otherwise keep the email
+        # ----------------------------------------------------
+
+        valid_emails.append(email)
 
     # Remove duplicates
     valid_emails = sorted(
