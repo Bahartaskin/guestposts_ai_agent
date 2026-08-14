@@ -8,6 +8,7 @@ from scraper import (
     find_relevant_links,
     scrape_relevant_pages,
     validate_emails,
+    get_best_contact_emails,
     get_website_text,
 )
 
@@ -154,22 +155,34 @@ def is_qualified(
     analysis_method,
 ):
     """
-    Determines whether the website is a qualified
-    guest-post opportunity.
+    Determine whether a website is a qualified
+    guest-post outreach opportunity.
 
-    The geography requirement is important because
-    the campaign has a target geography.
+    AI analysis:
+        - Industry: High or Medium
+        - Geography: High or Medium
+        - Guest-post potential: High
+        - Score: >= 65
 
-    Heuristic results are treated more conservatively
-    than AI results.
+    Heuristic analysis:
+        - Industry: High
+        - Geography: High or Medium
+        - Guest-post potential: High
+        - Score: >= 75
+
+    Unavailable analysis is rejected.
     """
+
+    # --------------------------------------------------------
+    # NEVER QUALIFY UNAVAILABLE ANALYSIS
+    # --------------------------------------------------------
+
+    if analysis_method == "Unavailable":
+        return False
 
     # --------------------------------------------------------
     # BASIC REQUIREMENTS
     # --------------------------------------------------------
-
-    if industry_match != "High":
-        return False
 
     if geography_match == "Low":
         return False
@@ -178,21 +191,35 @@ def is_qualified(
         return False
 
     # --------------------------------------------------------
-    # SCORE REQUIREMENT
+    # AI ANALYSIS
+    # --------------------------------------------------------
+
+    if analysis_method == "AI":
+
+        if industry_match not in (
+            "High",
+            "Medium",
+        ):
+            return False
+
+        return score >= 65
+
+    # --------------------------------------------------------
+    # HEURISTIC ANALYSIS
     # --------------------------------------------------------
 
     if analysis_method == "Heuristic":
 
-        # Conservative fallback.
+        if industry_match != "High":
+            return False
+
         return score >= 75
 
-    if analysis_method == "Unavailable":
+    # --------------------------------------------------------
+    # UNKNOWN ANALYSIS METHOD
+    # --------------------------------------------------------
 
-        return False
-
-    # AI result
-    return score >= 70
-
+    return False
 
 # ============================================================
 # GET SEARCH PARAMETERS
@@ -558,6 +585,32 @@ for result in results:
     )
 
     # --------------------------------------------------------
+    # SCORE EMAILS
+    # --------------------------------------------------------
+
+    best_contact_emails, _ = get_best_contact_emails(
+        valid_emails,
+        max_emails=5,
+    )
+
+    print(
+        "\nBest contact emails:"
+    )
+
+    for email in best_contact_emails:
+
+        print(
+            "-",
+            email
+        )
+
+    logger.info(
+        f"Best contact emails selected: "
+        f"{url} | "
+        f"Count: {len(best_contact_emails)}"
+    )
+
+    # --------------------------------------------------------
     # SAVE QUALIFIED SITE
     # --------------------------------------------------------
 
@@ -572,6 +625,7 @@ for result in results:
             "analysis_method": analysis_method,
             "reason": reason,
             "emails": valid_emails,
+            "best_contact_emails": best_contact_emails,
         }
     )
 
@@ -677,6 +731,25 @@ else:
                 "- No valid contact email found"
             )
 
+        print(
+            "Best Contact Emails:"
+        )
+
+        if site["best_contact_emails"]:
+
+            for email in site["best_contact_emails"]:
+
+                print(
+                    "-",
+                    email
+                )
+
+        else:
+
+            print(
+                "- No preferred contact email found"
+            )
+
 
 # ============================================================
 # SUMMARY
@@ -741,6 +814,7 @@ with open(
         "analysis_method",
         "reason",
         "emails",
+        "best_contact_emails",
     ]
 
     writer = csv.DictWriter(
@@ -772,6 +846,9 @@ with open(
                 "reason": site["reason"],
                 "emails": ", ".join(
                     site["emails"]
+                ),
+                "best_contact_emails": ", ".join(
+                    site["best_contact_emails"]
                 ),
             }
         )

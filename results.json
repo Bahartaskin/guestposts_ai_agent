@@ -1,17 +1,23 @@
 [
     {
-        "title": "Write for Us Travel Guest Post 2026 DxbTourisma | DxbTourisma Best Dubai Travel Company",
+        "title": "Write for Us Travel Guest Post 2026 DxbTourisma",
         "url": "https://dxbtourisma.com/write-for-us-travel-guest-post",
-        "score": 100,
+        "score": 90,
         "industry_match": "High",
         "geography_match": "High",
         "potential": "High",
-        "analysis_method": "Heuristic",
-        "reason": "Strong industry, geography, and guest-post signals were detected.",
+        "analysis_method": "AI",
+        "reason": "The website is a UAE-focused travel platform that explicitly accepts guest posts on adventure travel and sports activities like skydiving, hiking, and water sports.",
         "emails": [
             "form@dxbtourisma.com",
             "hello@yoursite.com",
             "info@dxbtourisma.com",
+            "post@dxbtourisma.com"
+        ],
+        "best_contact_emails": [
+            "hello@yoursite.com",
+            "info@dxbtourisma.com",
+            "form@dxbtourisma.com",
             "post@dxbtourisma.com"
         ]
     }

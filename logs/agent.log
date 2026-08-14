@@ -892,3 +892,309 @@
 2026-08-13 15:50:01,731 - INFO - Processing website: https://prnews.io/blog/top-sports-blogs.html
 2026-08-13 15:50:02,192 - ERROR - Request failed while getting website text: https://prnews.io/blog/top-sports-blogs.html | 403 Client Error: Forbidden for url: https://prnews.io/blog/top-sports-blogs.html
 2026-08-13 15:50:02,194 - INFO - Website content unavailable: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 15:59:11,014 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-13 15:59:11,885 - INFO - Search completed. Results found: 7
+2026-08-13 15:59:11,885 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-13 15:59:13,825 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:14,313 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:16,320 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:16,447 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:17,629 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:17,630 - INFO - Retrying request to /chat/completions in 0.471078 seconds
+2026-08-13 15:59:18,450 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:18,451 - INFO - Retrying request to /chat/completions in 0.841617 seconds
+2026-08-13 15:59:19,473 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:19,476 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 15:59:19,476 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-13 15:59:20,017 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:20,280 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:22,285 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:22,436 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:22,748 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:22,749 - INFO - Retrying request to /chat/completions in 0.456185 seconds
+2026-08-13 15:59:23,382 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:23,383 - INFO - Retrying request to /chat/completions in 0.856755 seconds
+2026-08-13 15:59:24,693 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:24,695 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 15:59:24,696 - INFO - Processing website: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post
+2026-08-13 15:59:24,882 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:25,166 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:27,170 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:27,282 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:27,664 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:27,665 - INFO - Retrying request to /chat/completions in 0.447621 seconds
+2026-08-13 15:59:28,289 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:28,290 - INFO - Retrying request to /chat/completions in 0.800209 seconds
+2026-08-13 15:59:29,506 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:29,507 - INFO - Website skipped: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post | Score: 0 | Industry: Low | Geography: Low | Potential: Low | Method: AI
+2026-08-13 15:59:29,507 - INFO - Processing website: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-13 15:59:29,838 - ERROR - Request failed while getting website text: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post | 403 Client Error: Forbidden for url: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-13 15:59:29,838 - INFO - Website content unavailable: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-13 15:59:29,838 - INFO - Processing website: https://sites.google.com/view/humaira-mehmood/write-for-us
+2026-08-13 15:59:30,346 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:30,569 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:32,572 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:32,686 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:33,018 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:33,019 - INFO - Retrying request to /chat/completions in 0.408093 seconds
+2026-08-13 15:59:33,609 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:33,610 - INFO - Retrying request to /chat/completions in 0.776280 seconds
+2026-08-13 15:59:34,596 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:34,599 - INFO - Website skipped: https://sites.google.com/view/humaira-mehmood/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 15:59:34,599 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-13 15:59:36,258 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:36,602 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:38,608 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 15:59:38,719 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:38,962 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:38,963 - INFO - Retrying request to /chat/completions in 0.470192 seconds
+2026-08-13 15:59:39,629 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:39,629 - INFO - Retrying request to /chat/completions in 0.914038 seconds
+2026-08-13 15:59:40,721 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 15:59:40,723 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 73 | Industry: Medium | Geography: High | Potential: High | Method: AI
+2026-08-13 15:59:40,723 - INFO - Processing website: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 15:59:40,992 - ERROR - Request failed while getting website text: https://prnews.io/blog/top-sports-blogs.html | 403 Client Error: Forbidden for url: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 15:59:40,993 - INFO - Website content unavailable: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 16:48:00,207 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-13 16:48:06,292 - INFO - Search completed. Results found: 4
+2026-08-13 16:48:06,292 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-13 16:48:08,477 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 16:48:08,888 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:10,895 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 16:48:11,011 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:12,535 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:12,537 - INFO - Retrying request to /chat/completions in 0.490876 seconds
+2026-08-13 16:48:13,560 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:13,561 - INFO - Retrying request to /chat/completions in 0.980371 seconds
+2026-08-13 16:48:14,928 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:14,934 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 16:48:14,934 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-13 16:48:15,695 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 16:48:15,973 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:17,977 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 16:48:18,118 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:18,374 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:18,374 - INFO - Retrying request to /chat/completions in 0.485979 seconds
+2026-08-13 16:48:19,398 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:19,399 - INFO - Retrying request to /chat/completions in 0.757776 seconds
+2026-08-13 16:48:20,338 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:20,341 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 16:48:20,341 - INFO - Processing website: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-13 16:48:20,548 - ERROR - Request failed while getting website text: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post | 403 Client Error: Forbidden for url: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-13 16:48:20,548 - INFO - Website content unavailable: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-13 16:48:20,548 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-13 16:48:22,107 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 16:48:22,417 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:24,420 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 16:48:24,542 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:24,927 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:24,928 - INFO - Retrying request to /chat/completions in 0.492750 seconds
+2026-08-13 16:48:25,605 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:25,606 - INFO - Retrying request to /chat/completions in 0.942730 seconds
+2026-08-13 16:48:26,732 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 16:48:26,734 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 73 | Industry: Medium | Geography: High | Potential: High | Method: AI
+2026-08-13 17:43:08,356 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-13 17:43:14,655 - INFO - Search completed. Results found: 6
+2026-08-13 17:43:14,655 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-13 17:43:16,559 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:16,928 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:18,934 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:19,121 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:20,865 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:20,866 - INFO - Retrying request to /chat/completions in 0.421146 seconds
+2026-08-13 17:43:21,822 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:21,823 - INFO - Retrying request to /chat/completions in 0.989492 seconds
+2026-08-13 17:43:22,993 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:22,997 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 17:43:22,998 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-13 17:43:23,591 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:23,854 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:25,861 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:26,054 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:26,635 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:26,635 - INFO - Retrying request to /chat/completions in 0.440266 seconds
+2026-08-13 17:43:27,262 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:27,263 - INFO - Retrying request to /chat/completions in 0.816571 seconds
+2026-08-13 17:43:28,588 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:28,591 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 17:43:28,591 - INFO - Processing website: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post
+2026-08-13 17:43:28,907 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:29,224 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:31,232 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:31,348 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:31,598 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:31,599 - INFO - Retrying request to /chat/completions in 0.473450 seconds
+2026-08-13 17:43:32,247 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:32,248 - INFO - Retrying request to /chat/completions in 0.921712 seconds
+2026-08-13 17:43:33,351 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:33,353 - INFO - Website skipped: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post | Score: 0 | Industry: Low | Geography: Low | Potential: Low | Method: AI
+2026-08-13 17:43:33,353 - INFO - Processing website: https://sites.google.com/view/humaira-mehmood/write-for-us
+2026-08-13 17:43:33,883 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:34,137 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:36,142 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:36,271 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:36,616 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:36,617 - INFO - Retrying request to /chat/completions in 0.382700 seconds
+2026-08-13 17:43:37,184 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:37,184 - INFO - Retrying request to /chat/completions in 0.896440 seconds
+2026-08-13 17:43:38,275 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:38,277 - INFO - Website skipped: https://sites.google.com/view/humaira-mehmood/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-13 17:43:38,277 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-13 17:43:39,993 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:40,301 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:42,308 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:43:42,424 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:42,714 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:42,715 - INFO - Retrying request to /chat/completions in 0.404804 seconds
+2026-08-13 17:43:43,304 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:43,305 - INFO - Retrying request to /chat/completions in 0.918587 seconds
+2026-08-13 17:43:44,466 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:43:44,469 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 73 | Industry: Medium | Geography: High | Potential: High | Method: AI
+2026-08-13 17:43:44,469 - INFO - Processing website: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 17:43:44,874 - ERROR - Request failed while getting website text: https://prnews.io/blog/top-sports-blogs.html | 403 Client Error: Forbidden for url: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 17:43:44,875 - INFO - Website content unavailable: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 17:59:50,298 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-13 17:59:51,217 - INFO - Search completed. Results found: 6
+2026-08-13 17:59:51,217 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-13 17:59:53,318 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:59:53,794 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:59:55,802 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 17:59:55,924 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:59:57,156 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:59:57,157 - INFO - Retrying request to /chat/completions in 0.391536 seconds
+2026-08-13 17:59:57,922 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:59:57,923 - INFO - Retrying request to /chat/completions in 0.751350 seconds
+2026-08-13 17:59:59,817 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 17:59:59,822 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: Heuristic
+2026-08-13 17:59:59,822 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-13 18:00:00,455 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:00,801 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:02,807 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:03,042 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:03,606 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:03,607 - INFO - Retrying request to /chat/completions in 0.380298 seconds
+2026-08-13 18:00:04,165 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:04,165 - INFO - Retrying request to /chat/completions in 0.860587 seconds
+2026-08-13 18:00:05,202 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:05,204 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: Heuristic
+2026-08-13 18:00:05,204 - INFO - Processing website: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post
+2026-08-13 18:00:05,375 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:05,675 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:07,682 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:07,803 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:08,047 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:08,047 - INFO - Retrying request to /chat/completions in 0.390211 seconds
+2026-08-13 18:00:08,670 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:08,672 - INFO - Retrying request to /chat/completions in 0.977571 seconds
+2026-08-13 18:00:09,885 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:09,887 - INFO - Website skipped: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post | Score: 0 | Industry: Low | Geography: Low | Potential: Low | Method: Heuristic
+2026-08-13 18:00:09,887 - INFO - Processing website: https://sites.google.com/view/humaira-mehmood/write-for-us
+2026-08-13 18:00:10,434 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:10,658 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:12,662 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:12,863 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:13,128 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:13,129 - INFO - Retrying request to /chat/completions in 0.443509 seconds
+2026-08-13 18:00:13,760 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:13,761 - INFO - Retrying request to /chat/completions in 0.834072 seconds
+2026-08-13 18:00:14,777 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:14,779 - INFO - Website skipped: https://sites.google.com/view/humaira-mehmood/write-for-us | Score: 59 | Industry: High | Geography: Low | Potential: High | Method: Heuristic
+2026-08-13 18:00:14,779 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-13 18:00:16,352 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:16,676 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:18,682 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-13 18:00:18,796 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:19,032 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:19,033 - INFO - Retrying request to /chat/completions in 0.411210 seconds
+2026-08-13 18:00:19,888 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:19,889 - INFO - Retrying request to /chat/completions in 0.756014 seconds
+2026-08-13 18:00:20,897 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-08-13 18:00:20,899 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 73 | Industry: Medium | Geography: High | Potential: High | Method: Heuristic
+2026-08-13 18:00:20,899 - INFO - Processing website: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 18:00:21,318 - ERROR - Request failed while getting website text: https://prnews.io/blog/top-sports-blogs.html | 403 Client Error: Forbidden for url: https://prnews.io/blog/top-sports-blogs.html
+2026-08-13 18:00:21,319 - INFO - Website content unavailable: https://prnews.io/blog/top-sports-blogs.html
+2026-08-14 13:05:16,207 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-14 13:05:21,250 - INFO - Search completed. Results found: 6
+2026-08-14 13:05:21,250 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-14 13:05:23,437 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:05:31,080 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:05:31,086 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 50 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 13:05:31,087 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-14 13:05:31,662 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:05:42,548 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:05:42,554 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 20 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 13:05:42,554 - INFO - Processing website: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post
+2026-08-14 13:05:43,281 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:05:47,791 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:05:47,795 - INFO - Website skipped: https://www.fiverr.com/shaheryarsha773/provide-uae-usa-uk-au-de-sports-guest-post | Score: 0 | Industry: Low | Geography: Low | Potential: Low | Method: AI
+2026-08-14 13:05:47,795 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-14 13:05:51,724 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:06:04,770 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:06:04,774 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 65 | Industry: Medium | Geography: High | Potential: High | Method: AI
+2026-08-14 13:06:04,774 - INFO - Processing website: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932
+2026-08-14 13:06:04,893 - ERROR - Request failed while getting website text: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932 | 403 Client Error: Forbidden for url: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932
+2026-08-14 13:06:04,893 - INFO - Website content unavailable: https://medium.com/@ahadarzi/top-5-best-guest-post-sites-in-uae-e153e2547932
+2026-08-14 13:06:04,893 - INFO - Processing website: https://www.sportsbroadcastjournal.com/write-for-us
+2026-08-14 13:06:06,839 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:06:12,448 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:06:12,453 - INFO - Website skipped: https://www.sportsbroadcastjournal.com/write-for-us | Score: 30 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 13:55:00,813 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-14 13:55:03,975 - INFO - Search completed. Results found: 5
+2026-08-14 13:55:03,976 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-14 13:55:05,868 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:55:15,525 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:55:15,532 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 60 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 13:55:15,532 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-14 13:55:16,193 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:55:24,147 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:55:24,152 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 40 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 13:55:24,152 - INFO - Processing website: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post
+2026-08-14 13:55:24,347 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:55:37,356 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:55:37,361 - INFO - Website skipped: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post | Score: 5 | Industry: Low | Geography: Low | Potential: Low | Method: AI
+2026-08-14 13:55:37,361 - INFO - Processing website: https://sportsandgulf.ae/about-us
+2026-08-14 13:55:39,264 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:55:45,754 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:55:45,758 - INFO - Website skipped: https://sportsandgulf.ae/about-us | Score: 95 | Industry: High | Geography: High | Potential: Medium | Method: AI
+2026-08-14 13:55:45,758 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-14 13:55:47,247 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 13:55:55,028 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 13:55:55,032 - INFO - Website skipped: https://dxbtourisma.com/write-for-us-travel-guest-post | Score: 65 | Industry: Medium | Geography: High | Potential: High | Method: AI
+2026-08-14 14:05:35,945 - INFO - Search started: sports blog OR magazine OR news "write for us" OR "guest post" OR contribute UAE
+2026-08-14 14:05:36,751 - INFO - Search completed. Results found: 5
+2026-08-14 14:05:36,752 - INFO - Processing website: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog
+2026-08-14 14:05:38,711 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:05:48,188 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:05:48,195 - INFO - Website skipped: https://www.thesportsmirror.com/sports-guest-post-write-for-us-contribute-sports-guest-blog | Score: 30 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 14:05:48,195 - INFO - Processing website: https://sports-star.co.uk/write-for-us
+2026-08-14 14:05:48,788 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:05:58,009 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:05:58,013 - INFO - Website skipped: https://sports-star.co.uk/write-for-us | Score: 60 | Industry: High | Geography: Low | Potential: High | Method: AI
+2026-08-14 14:05:58,013 - INFO - Processing website: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post
+2026-08-14 14:05:58,209 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:06:08,773 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:06:08,777 - INFO - Website skipped: https://www.slideserve.com/oliviasmith98/write-for-us-sports-guest-post | Score: 10 | Industry: High | Geography: Low | Potential: Low | Method: AI
+2026-08-14 14:06:08,777 - INFO - Processing website: https://sportsandgulf.ae/about-us
+2026-08-14 14:06:10,958 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:06:18,694 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:06:18,697 - INFO - Website skipped: https://sportsandgulf.ae/about-us | Score: 95 | Industry: High | Geography: High | Potential: Medium | Method: AI
+2026-08-14 14:06:18,698 - INFO - Processing website: https://dxbtourisma.com/write-for-us-travel-guest-post
+2026-08-14 14:06:20,362 - INFO - AFC is enabled with max remote calls: 10.
+2026-08-14 14:06:28,896 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-08-14 14:06:29,685 - INFO - Email extraction: https://dxbtourisma.com/write-for-us-travel-guest-post | Emails found: 1
+2026-08-14 14:06:30,500 - INFO - Relevant links found: 6
+2026-08-14 14:06:31,264 - INFO - Email extraction: https://dxbtourisma.com/contact-us | Emails found: 2
+2026-08-14 14:06:31,264 - INFO - Relevant page processed: https://dxbtourisma.com/contact-us | Emails found: 2
+2026-08-14 14:06:31,562 - INFO - Email extraction: https://dxbtourisma.com/travel-guest-post-submission/ | Emails found: 3
+2026-08-14 14:06:31,562 - INFO - Relevant page processed: https://dxbtourisma.com/travel-guest-post-submission/ | Emails found: 3
+2026-08-14 14:06:31,825 - INFO - Email extraction: https://dxbtourisma.com/product/paid-guest-post-submission/ | Emails found: 1
+2026-08-14 14:06:31,825 - INFO - Relevant page processed: https://dxbtourisma.com/product/paid-guest-post-submission/ | Emails found: 1
+2026-08-14 14:06:32,093 - INFO - Email extraction: https://dxbtourisma.com/blog/ | Emails found: 1
+2026-08-14 14:06:32,093 - INFO - Relevant page processed: https://dxbtourisma.com/blog/ | Emails found: 1
+2026-08-14 14:06:32,352 - INFO - Email extraction: https://dxbtourisma.com/contact-us/ | Emails found: 2
+2026-08-14 14:06:32,352 - INFO - Relevant page processed: https://dxbtourisma.com/contact-us/ | Emails found: 2
+2026-08-14 14:06:32,610 - INFO - Email extraction: https://dxbtourisma.com/write-for-us-travel-guest-post/ | Emails found: 1
+2026-08-14 14:06:32,611 - INFO - Relevant page processed: https://dxbtourisma.com/write-for-us-travel-guest-post/ | Emails found: 1
+2026-08-14 14:06:32,611 - INFO - Email validation completed: https://dxbtourisma.com/write-for-us-travel-guest-post | Valid: 4 | Excluded: 0
+2026-08-14 14:06:32,611 - INFO - Best contact emails selected: https://dxbtourisma.com/write-for-us-travel-guest-post | Count: 4
+2026-08-14 14:06:32,611 - INFO - Website qualification: https://dxbtourisma.com/write-for-us-travel-guest-post | Status: QUALIFIED | Score: 90 | Industry: High | Geography: High | Potential: High

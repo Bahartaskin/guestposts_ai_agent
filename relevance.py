@@ -1,6 +1,6 @@
 import os
 import re
-import time
+
 
 from dotenv import load_dotenv
 
@@ -26,6 +26,7 @@ GUEST_POST_SIGNALS = [
     "guest contributor",
 ]
 
+
 MARKETPLACE_SIGNALS = [
     "buy guest post",
     "buy guest posts",
@@ -43,6 +44,7 @@ MARKETPLACE_SIGNALS = [
     "backlink marketplace",
 ]
 
+
 AGGREGATOR_SIGNALS = [
     "top guest posting sites",
     "guest posting sites",
@@ -53,12 +55,14 @@ AGGREGATOR_SIGNALS = [
     "guest post opportunities list",
 ]
 
+
 LOW_QUALITY_SIGNALS = [
     "fiverr.com",
     "upwork.com",
     "slideserve.com",
     "prnews.io",
 ]
+
 
 GEOGRAPHY_ALIASES = {
     "uae": [
@@ -196,6 +200,13 @@ def _get_gemini_client():
 
 
 def _check_with_gemini(prompt):
+    """
+    Run Gemini relevance analysis.
+
+    If Gemini is unavailable, rate-limited, or quota is exhausted,
+    return None immediately so the caller can use the next fallback.
+    """
+
     client = _get_gemini_client()
 
     if not gemini_api_key:
@@ -208,46 +219,40 @@ def _check_with_gemini(prompt):
         )
         return None
 
-    max_attempts = 2
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+        )
 
-    for attempt in range(1, max_attempts + 1):
+        return response.text
 
-        try:
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt,
+    except Exception as e:
+
+        error_text = str(e).lower()
+
+        is_rate_limited = (
+            "429" in str(e)
+            or "rate" in error_text
+            or "quota" in error_text
+            or "resource_exhausted" in error_text
+            or "resource exhausted" in error_text
+        )
+
+        if is_rate_limited:
+
+            print(
+                "Gemini quota/rate limit reached. "
+                "Skipping Gemini retry and using fallback."
             )
 
-            return response.text
-
-        except Exception as e:
-
-            error_text = str(e).lower()
-
-            is_rate_limited = (
-                "429" in str(e)
-                or "rate" in error_text
-                or "quota" in error_text
-            )
-
-            if is_rate_limited and attempt < max_attempts:
-
-                wait_seconds = 2 ** attempt
-
-                print(
-                    f"Gemini rate limited. Retrying in "
-                    f"{wait_seconds}s..."
-                )
-
-                time.sleep(wait_seconds)
-
-                continue
+        else:
 
             print(
                 f"Gemini relevance check failed: {e}"
             )
 
-            return None
+        return None
 
 
 def _check_with_openai(prompt):
@@ -446,6 +451,7 @@ def _check_with_heuristics(
             "Industry match: Low\n"
             "Geography match: Low\n"
             "Guest post potential: Low\n"
+            "Analysis method: Heuristic\n"
             "Reason: This website appears to be an SEO or guest-post marketplace rather than a publisher."
         )
 
@@ -458,6 +464,7 @@ def _check_with_heuristics(
             "Industry match: Low\n"
             "Geography match: Low\n"
             "Guest post potential: Low\n"
+            "Analysis method: Heuristic\n"
             "Reason: This website appears to aggregate guest-post opportunities rather than publish content directly."
         )
 
@@ -470,6 +477,7 @@ def _check_with_heuristics(
             "Industry match: Low\n"
             "Geography match: Low\n"
             "Guest post potential: Low\n"
+            "Analysis method: Heuristic\n"
             "Reason: This appears to be a third-party marketplace or distribution platform rather than a target publisher."
         )
 
@@ -648,6 +656,7 @@ def _check_with_heuristics(
         f"Industry match: {industry_match}\n"
         f"Geography match: {geography_match}\n"
         f"Guest post potential: {guest_potential}\n"
+        f"Analysis method: Heuristic\n"
         f"Reason: {reason}"
     )
 
