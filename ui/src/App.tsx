@@ -4,6 +4,9 @@ import {
   Bot,
   Briefcase,
   CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
   FileText,
   Globe,
   Loader2,
@@ -11,7 +14,9 @@ import {
   MessageCircle,
   Play,
   Terminal,
+  X,
 } from 'lucide-react'
+
 import {
   useEffect,
   useRef,
@@ -36,6 +41,8 @@ interface LogEntry {
 interface ResultEntry {
   id: string
   url: string
+  title: string
+
   actionTaken: string
   contactDetail: string
   timestamp: string
@@ -45,6 +52,15 @@ interface ResultEntry {
   geographyMatch: string
   potential: string
   analysisMethod: string
+
+  reason: string
+
+  emails: string[]
+  excludedEmails: string[]
+  sourcePages: string[]
+
+  outreachSubject: string
+  outreachMessage: string
 }
 
 
@@ -73,6 +89,11 @@ function App() {
 
   const [results, setResults] =
     useState<ResultEntry[]>([])
+
+  const [
+    selectedResult,
+    setSelectedResult,
+  ] = useState<ResultEntry | null>(null)
 
   const logsEndRef =
     useRef<HTMLDivElement>(null)
@@ -200,6 +221,7 @@ function App() {
 
     setLogs([])
     setResults([])
+    setSelectedResult(null)
     setCampaignId(null)
     setStatus('running')
 
@@ -374,6 +396,50 @@ function App() {
     completed: 'Completed',
     error: 'Error',
   }[status]
+
+
+  // ========================================================
+  // CAMPAIGN SUMMARY
+  // ========================================================
+
+  const websitesFound = (() => {
+    for (const log of logs) {
+      const match =
+        log.message.match(
+          /Found\s+(\d+)\s+results/i,
+        )
+
+      if (match) {
+        return Number(match[1])
+      }
+    }
+
+    return 0
+  })()
+
+
+  const rejectedCount =
+    logs.filter(
+      (log) =>
+        log.message
+          .toLowerCase()
+          .includes(
+            'skipping website - not a qualified',
+          ),
+    ).length
+
+
+  const qualifiedCount =
+    results.length
+
+
+  const outreachPreparedCount =
+    results.filter(
+      (result) =>
+        result.actionTaken
+          .toLowerCase()
+          .includes('prepared'),
+    ).length
 
 
   return (
@@ -660,7 +726,83 @@ function App() {
           </div>
 
 
+          {/* ================================================= */}
+          {/* CAMPAIGN SUMMARY */}
+          {/* ================================================= */}
+
+          <section className="summary-grid">
+            <div className="summary-card">
+              <div className="summary-icon">
+                <Globe size={18} />
+              </div>
+
+              <div>
+                <span className="summary-label">
+                  Websites Found
+                </span>
+
+                <strong>
+                  {websitesFound}
+                </strong>
+              </div>
+            </div>
+
+
+            <div className="summary-card">
+              <div className="summary-icon success">
+                <CheckCircle2 size={18} />
+              </div>
+
+              <div>
+                <span className="summary-label">
+                  Qualified
+                </span>
+
+                <strong>
+                  {qualifiedCount}
+                </strong>
+              </div>
+            </div>
+
+
+            <div className="summary-card">
+              <div className="summary-icon rejected">
+                <AlertCircle size={18} />
+              </div>
+
+              <div>
+                <span className="summary-label">
+                  Rejected
+                </span>
+
+                <strong>
+                  {rejectedCount}
+                </strong>
+              </div>
+            </div>
+
+
+            <div className="summary-card">
+              <div className="summary-icon outreach">
+                <Mail size={18} />
+              </div>
+
+              <div>
+                <span className="summary-label">
+                  Outreach Prepared
+                </span>
+
+                <strong>
+                  {outreachPreparedCount}
+                </strong>
+              </div>
+            </div>
+          </section>
+
+
+          {/* ================================================= */}
           {/* RESULTS */}
+          {/* ================================================= */}
 
           <div className="results-panel">
             <div className="results-header">
@@ -683,23 +825,25 @@ function App() {
             <div className="table-wrapper">
               <table>
                 <thead>
-  <tr>
-    <th>Website</th>
-    <th>Score</th>
-    <th>Industry</th>
-    <th>Geography</th>
-    <th>Guest Post</th>
-    <th>Method</th>
-    <th>Outreach</th>
-    <th>Contact</th>
-  </tr>
-</thead>
+                  <tr>
+                    <th>Website</th>
+                    <th>Score</th>
+                    <th>Industry</th>
+                    <th>Geography</th>
+                    <th>Guest Post</th>
+                    <th>Method</th>
+                    <th>Outreach</th>
+                    <th>Contact</th>
+                    <th />
+                  </tr>
+                </thead>
+
                 <tbody>
                   {results.length === 0
                     ? (
                       <tr>
                         <td
-                          colSpan={8}
+                          colSpan={9}
                           className="empty-results"
                         >
                           No qualified
@@ -708,92 +852,414 @@ function App() {
                       </tr>
                     )
                     : results.map(
-                      (result) => (
-                        <tr
-                          key={
-                            result.id
-                          }
-                        >
-                          
-<td>
-  <a
-    href={result.url}
-    target="_blank"
-    rel="noreferrer"
-  >
-    {getHostname(result.url)}
-  </a>
-</td>
+                      (result) => {
+                        const isSelected =
+                          selectedResult?.id
+                          === result.id
 
-<td>
-  <span className="score-badge">
-    {result.score}
-  </span>
-</td>
+                        return (
+                          <tr
+                            key={result.id}
+                            className={
+                              `result-row ${
+                                isSelected
+                                  ? 'selected'
+                                  : ''
+                              }`
+                            }
+                            onClick={() =>
+                              setSelectedResult(
+                                isSelected
+                                  ? null
+                                  : result,
+                              )
+                            }
+                          >
+                            <td>
+                              <a
+                                href={result.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                onClick={(event) =>
+                                  event.stopPropagation()
+                                }
+                              >
+                                {getHostname(
+                                  result.url,
+                                )}
+                              </a>
+                            </td>
 
-<td>
-  <span
-    className={`match-badge ${result.industryMatch.toLowerCase()}`}
-  >
-    {result.industryMatch}
-  </span>
-</td>
+                            <td>
+                              <span className="score-badge">
+                                {result.score}
+                              </span>
+                            </td>
 
-<td>
-  <span
-    className={`match-badge ${result.geographyMatch.toLowerCase()}`}
-  >
-    {result.geographyMatch}
-  </span>
-</td>
+                            <td>
+                              <span
+                                className={
+                                  `match-badge ${
+                                    result
+                                      .industryMatch
+                                      .toLowerCase()
+                                  }`
+                                }
+                              >
+                                {
+                                  result.industryMatch
+                                }
+                              </span>
+                            </td>
 
-<td>
-  <span
-    className={`match-badge ${result.potential.toLowerCase()}`}
-  >
-    {result.potential}
-  </span>
-</td>
+                            <td>
+                              <span
+                                className={
+                                  `match-badge ${
+                                    result
+                                      .geographyMatch
+                                      .toLowerCase()
+                                  }`
+                                }
+                              >
+                                {
+                                  result.geographyMatch
+                                }
+                              </span>
+                            </td>
 
-<td>
-  <span className="method-badge">
-    {result.analysisMethod}
-  </span>
-</td>
+                            <td>
+                              <span
+                                className={
+                                  `match-badge ${
+                                    result
+                                      .potential
+                                      .toLowerCase()
+                                  }`
+                                }
+                              >
+                                {
+                                  result.potential
+                                }
+                              </span>
+                            </td>
 
-<td>
-  <span className="action-cell">
-    {getActionIcon(
-      result.actionTaken,
-    )}
-    {result.actionTaken}
-  </span>
-</td>
+                            <td>
+                              <span className="method-badge">
+                                {
+                                  result.analysisMethod
+                                }
+                              </span>
+                            </td>
 
-<td className="contact-cell">
-  {result.contactDetail}
-</td>
-<td>
-  <span className="action-cell">
-    {getActionIcon(
-      result.actionTaken,
-    )}
+                            <td>
+                              <span className="action-cell">
+                                {getActionIcon(
+                                  result.actionTaken,
+                                )}
 
-    {result.actionTaken}
-  </span>
-</td>
+                                {
+                                  result.actionTaken
+                                }
+                              </span>
+                            </td>
 
-<td className="contact-cell">
-  {result.contactDetail}
-</td>
-                        </tr>
-                      ),
+                            <td className="contact-cell">
+                              {
+                                result.contactDetail
+                              }
+                            </td>
+
+                            <td className="expand-cell">
+                              {isSelected
+                                ? (
+                                  <ChevronUp
+                                    size={16}
+                                  />
+                                )
+                                : (
+                                  <ChevronDown
+                                    size={16}
+                                  />
+                                )
+                              }
+                            </td>
+                          </tr>
+                        )
+                      },
                     )
                   }
                 </tbody>
               </table>
             </div>
           </div>
+
+
+          {/* ================================================= */}
+          {/* SELECTED OPPORTUNITY DETAIL */}
+          {/* ================================================= */}
+
+          {selectedResult && (
+            <section className="detail-panel">
+              <div className="detail-header">
+                <div>
+                  <span className="detail-eyebrow">
+                    Qualified Opportunity
+                  </span>
+
+                  <h2>
+                    {selectedResult.title
+                      || getHostname(
+                        selectedResult.url,
+                      )
+                    }
+                  </h2>
+
+                  <a
+                    href={selectedResult.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="detail-url"
+                  >
+                    {getHostname(
+                      selectedResult.url,
+                    )}
+
+                    <ExternalLink
+                      size={13}
+                    />
+                  </a>
+                </div>
+
+                <button
+                  type="button"
+                  className="detail-close"
+                  onClick={() =>
+                    setSelectedResult(null)
+                  }
+                  aria-label="Close detail panel"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+
+              <div className="detail-score-row">
+                <div>
+                  <span>Score</span>
+                  <strong>
+                    {selectedResult.score}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Industry</span>
+                  <strong>
+                    {
+                      selectedResult.industryMatch
+                    }
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Geography</span>
+                  <strong>
+                    {
+                      selectedResult.geographyMatch
+                    }
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Guest Post</span>
+                  <strong>
+                    {
+                      selectedResult.potential
+                    }
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Method</span>
+                  <strong>
+                    {
+                      selectedResult.analysisMethod
+                    }
+                  </strong>
+                </div>
+              </div>
+
+
+              <div className="detail-grid">
+                <div className="detail-section detail-wide">
+                  <h3>
+                    Why it qualified
+                  </h3>
+
+                  <p>
+                    {selectedResult.reason
+                      || 'No relevance reason was provided.'
+                    }
+                  </p>
+                </div>
+
+
+                <div className="detail-section">
+                  <h3>
+                    Contact emails
+                  </h3>
+
+                  {selectedResult.emails.length > 0
+                    ? (
+                      <ul className="detail-list">
+                        {selectedResult.emails.map(
+                          (email) => (
+                            <li key={email}>
+                              <Mail size={14} />
+                              <span>
+                                {email}
+                              </span>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    )
+                    : (
+                      <p className="muted">
+                        No validated emails found.
+                      </p>
+                    )
+                  }
+                </div>
+
+
+                <div className="detail-section">
+                  <h3>
+                    Excluded emails
+                  </h3>
+
+                  {selectedResult.excludedEmails.length > 0
+                    ? (
+                      <ul className="detail-list excluded">
+                        {selectedResult.excludedEmails.map(
+                          (email) => (
+                            <li key={email}>
+                              <AlertCircle
+                                size={14}
+                              />
+                              <span>
+                                {email}
+                              </span>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    )
+                    : (
+                      <p className="muted">
+                        None
+                      </p>
+                    )
+                  }
+                </div>
+
+
+                <div className="detail-section detail-wide">
+                  <h3>
+                    Relevant pages
+                  </h3>
+
+                  {selectedResult.sourcePages.length > 0
+                    ? (
+                      <div className="source-page-list">
+                        {selectedResult.sourcePages.map(
+                          (page) => (
+                            <a
+                              key={page}
+                              href={page}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <ExternalLink
+                                size={13}
+                              />
+
+                              <span>
+                                {page}
+                              </span>
+                            </a>
+                          ),
+                        )}
+                      </div>
+                    )
+                    : (
+                      <p className="muted">
+                        No additional relevant pages detected.
+                      </p>
+                    )
+                  }
+                </div>
+
+
+                <div className="detail-section detail-wide outreach-detail">
+                  <div className="detail-section-title">
+                    <div>
+                      <Mail size={16} />
+
+                      <h3>
+                        Prepared outreach
+                      </h3>
+                    </div>
+
+                    <span className="prepared-pill">
+                      Prepared
+                    </span>
+                  </div>
+
+                  {selectedResult.outreachSubject && (
+                    <div className="outreach-field">
+                      <span>
+                        Subject
+                      </span>
+
+                      <strong>
+                        {
+                          selectedResult.outreachSubject
+                        }
+                      </strong>
+                    </div>
+                  )}
+
+                  <div className="outreach-field">
+                    <span>
+                      Target
+                    </span>
+
+                    <strong>
+                      {
+                        selectedResult.contactDetail
+                      }
+                    </strong>
+                  </div>
+
+                  {selectedResult.outreachMessage
+                    ? (
+                      <div className="outreach-message">
+                        {
+                          selectedResult.outreachMessage
+                        }
+                      </div>
+                    )
+                    : (
+                      <p className="muted">
+                        No outreach message was prepared.
+                      </p>
+                    )
+                  }
+                </div>
+              </div>
+            </section>
+          )}
         </section>
       </main>
     </div>

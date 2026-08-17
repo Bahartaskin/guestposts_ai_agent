@@ -923,3 +923,538 @@ td a:hover {
   font-size: 10px;
   font-weight: 700;
 }
+
+/* =========================================================
+   CAMPAIGN SUMMARY
+   ========================================================= */
+
+.summary-grid {
+  width: 100%;
+  margin: 0 0 16px 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.summary-card {
+  min-height: 72px;
+  padding: 12px 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #ffffff;
+  border: 1px solid #e3e7ef;
+  border-radius: 12px;
+
+  box-shadow: 0 2px 8px rgba(21, 29, 50, 0.03);
+}
+
+.summary-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.summary-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.summary-card strong {
+  font-size: 20px;
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.summary-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.summary-icon.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.summary-icon.rejected {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.summary-icon.outreach {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+@media (max-width: 900px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   RESULT ROW INTERACTION
+   ========================================================= */
+
+.result-row {
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    box-shadow 0.15s;
+}
+
+.result-row:hover {
+  background: #f8fafc;
+}
+
+.result-row.selected {
+  background: #f4f4ff;
+  box-shadow:
+    inset 3px 0 0 #4f46e5;
+}
+
+.expand-cell {
+  width: 34px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+
+/* =========================================================
+   OPPORTUNITY DETAIL PANEL
+   ========================================================= */
+
+.detail-panel {
+  background: #ffffff;
+  border: 1px solid #e3e7ef;
+  border-radius: 14px;
+  overflow: hidden;
+
+  box-shadow:
+    0 5px 20px
+    rgba(21, 29, 50, 0.05);
+}
+
+.detail-header {
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  border-bottom: 1px solid #edf0f5;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #ffffff,
+      #fafbfe
+    );
+}
+
+.detail-eyebrow {
+  display: block;
+  margin-bottom: 5px;
+
+  color: #6366f1;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.detail-header h2 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 17px;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.detail-url {
+  margin-top: 7px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #6366f1;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  text-decoration: none;
+}
+
+.detail-url:hover {
+  text-decoration: underline;
+}
+
+.detail-close {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e3e7ef;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #7b8595;
+
+  cursor: pointer;
+
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.detail-close:hover {
+  color: #334155;
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+
+/* =========================================================
+   DETAIL SCORE SUMMARY
+   ========================================================= */
+
+.detail-score-row {
+  padding: 14px 20px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 10px;
+
+  border-bottom: 1px solid #edf0f5;
+
+  background: #fbfcfe;
+}
+
+.detail-score-row > div {
+  min-width: 0;
+
+  padding: 10px 12px;
+
+  border: 1px solid #e8ebf1;
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.detail-score-row span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #8a94a6;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.detail-score-row strong {
+  color: #253047;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   DETAIL CONTENT
+   ========================================================= */
+
+.detail-grid {
+  padding: 18px 20px 20px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.detail-section {
+  min-width: 0;
+
+  padding: 15px;
+
+  border: 1px solid #e8ebf1;
+  border-radius: 11px;
+
+  background: #ffffff;
+}
+
+.detail-wide {
+  grid-column: 1 / -1;
+}
+
+.detail-section h3 {
+  margin: 0 0 9px;
+
+  color: #364154;
+
+  font-size: 11px;
+  font-weight: 750;
+
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+}
+
+.detail-section p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.detail-section .muted {
+  color: #9aa3b1;
+}
+
+
+/* =========================================================
+   DETAIL LISTS
+   ========================================================= */
+
+.detail-list {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  list-style: none;
+}
+
+.detail-list li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #4b5563;
+
+  font-size: 11.5px;
+}
+
+.detail-list li svg {
+  color: #6366f1;
+}
+
+.detail-list.excluded li {
+  color: #9b5c5c;
+}
+
+.detail-list.excluded li svg {
+  color: #ef4444;
+}
+
+
+/* =========================================================
+   SOURCE PAGES
+   ========================================================= */
+
+.source-page-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.source-page-list a {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #4f46e5;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  text-decoration: none;
+}
+
+.source-page-list a:hover {
+  text-decoration: underline;
+}
+
+.source-page-list a span {
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   PREPARED OUTREACH
+   ========================================================= */
+
+.outreach-detail {
+  background:
+    linear-gradient(
+      145deg,
+      #fbfcff,
+      #f8f9ff
+    );
+
+  border-color: #dfe2ff;
+}
+
+.detail-section-title {
+  margin-bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.detail-section-title > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.detail-section-title svg {
+  color: #4f46e5;
+}
+
+.detail-section-title h3 {
+  margin: 0;
+}
+
+.prepared-pill {
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  background: #dcfce7;
+  color: #15803d;
+
+  font-size: 9px;
+  font-weight: 750;
+
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+}
+
+.outreach-field {
+  margin-top: 9px;
+
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+
+  align-items: start;
+}
+
+.outreach-field > span {
+  color: #929bad;
+
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.outreach-field > strong {
+  color: #455064;
+
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.outreach-message {
+  margin-top: 14px;
+
+  padding: 14px;
+
+  white-space: pre-wrap;
+
+  border: 1px solid #e2e5f5;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #566175;
+
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   DETAIL RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .detail-score-row {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-wide {
+    grid-column: auto;
+  }
+
+  .detail-score-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .outreach-field {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+}

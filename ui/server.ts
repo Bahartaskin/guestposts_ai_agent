@@ -36,6 +36,8 @@ interface LogEntry {
 interface ResultEntry {
   id: string;
   url: string;
+  title: string;
+
   actionTaken: string;
   contactDetail: string;
   timestamp: string;
@@ -45,6 +47,15 @@ interface ResultEntry {
   geographyMatch: string;
   potential: string;
   analysisMethod: string;
+
+  reason: string;
+
+  emails: string[];
+  excludedEmails: string[];
+  sourcePages: string[];
+
+  outreachSubject: string;
+  outreachMessage: string;
 }
 
 
@@ -278,6 +289,10 @@ function loadPipelineResults(
       JSON.parse(raw);
 
     if (!Array.isArray(parsed)) {
+      emitLog(
+        campaignId,
+        "results.json does not contain a result list."
+      );
       return;
     }
 
@@ -285,6 +300,9 @@ function loadPipelineResults(
 
       const outreach =
         site.outreach || {};
+
+      const details =
+        outreach.details || {};
 
       const action =
         outreach.action
@@ -294,37 +312,55 @@ function loadPipelineResults(
         outreach.status
         || "Required";
 
+      const emails =
+        Array.isArray(site.emails)
+          ? site.emails
+          : [];
+
+      const excludedEmails =
+        Array.isArray(site.excluded_emails)
+          ? site.excluded_emails
+          : [];
+
+      const sourcePages =
+        Array.isArray(site.source_pages)
+          ? site.source_pages
+          : [];
+
       const target =
         outreach.target
         || (
-          site.emails
-          && site.emails.length
-            ? site.emails[0]
+          emails.length > 0
+            ? emails[0]
             : site.url
-        );
+        )
+        || "";
 
       emitResult(
-  campaignId,
-  {
-    id: createId(),
-    url: site.url,
-    actionTaken:
-      `${action} ${status}`,
-    contactDetail: target,
-    timestamp:
-      new Date().toISOString(),
-
-    score: site.score ?? 0,
-    industryMatch:
-      site.industry_match ?? "",
-    geographyMatch:
-      site.geography_match ?? "",
-    potential:
-      site.potential ?? "",
-    analysisMethod:
-      site.analysis_method ?? "",
-  }
-);
+        campaignId,
+        {
+          id: createId(),
+          url: site.url ?? "",
+          title: site.title ?? "",
+          actionTaken: `${action} ${status}`,
+          contactDetail: target,
+          timestamp: new Date().toISOString(),
+          score: site.score ?? 0,
+          industryMatch: site.industry_match ?? "",
+          geographyMatch: site.geography_match ?? "",
+          potential: site.potential ?? "",
+          analysisMethod: site.analysis_method ?? "",
+          reason: site.reason ?? "",
+          emails,
+          excludedEmails,
+          sourcePages,
+          outreachSubject: details.subject ?? "",
+          outreachMessage:
+            details.body
+            ?? details.message
+            ?? "",
+        }
+      );
     }
 
   } catch (error) {
