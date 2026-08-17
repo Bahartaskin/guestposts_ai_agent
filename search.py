@@ -84,9 +84,9 @@ EXCLUDED_RESULT_KEYWORDS = [
 ]
 def create_search_query(industry, geography):
     return (
-        f"{industry} blog OR magazine OR news "
+        f'{industry} blog OR magazine OR news '
         f'"write for us" OR "guest post" OR contribute '
-        f"{geography}"
+        f'{geography}'
     )
 
 

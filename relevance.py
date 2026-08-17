@@ -1,7 +1,6 @@
 import os
 import re
 
-
 from dotenv import load_dotenv
 
 
@@ -26,7 +25,6 @@ GUEST_POST_SIGNALS = [
     "guest contributor",
 ]
 
-
 MARKETPLACE_SIGNALS = [
     "buy guest post",
     "buy guest posts",
@@ -44,7 +42,6 @@ MARKETPLACE_SIGNALS = [
     "backlink marketplace",
 ]
 
-
 AGGREGATOR_SIGNALS = [
     "top guest posting sites",
     "guest posting sites",
@@ -55,14 +52,12 @@ AGGREGATOR_SIGNALS = [
     "guest post opportunities list",
 ]
 
-
 LOW_QUALITY_SIGNALS = [
     "fiverr.com",
     "upwork.com",
     "slideserve.com",
     "prnews.io",
 ]
-
 
 GEOGRAPHY_ALIASES = {
     "uae": [
@@ -99,13 +94,7 @@ GEOGRAPHY_ALIASES = {
 }
 
 
-def _build_prompt(
-    title,
-    url,
-    industry,
-    geography,
-    website_text,
-):
+def _build_prompt(title, url, industry, geography, website_text):
     return f"""
 You are evaluating a website for a guest-post outreach campaign.
 
@@ -126,6 +115,7 @@ Relevance score: a number from 0 to 100
 Industry match: High, Medium, or Low
 Geography match: High, Medium, or Low
 Guest post potential: High, Medium, or Low
+Analysis method: AI
 Reason: one short sentence
 
 Important rules:
@@ -162,8 +152,6 @@ Keep the answer concise.
 
 
 def _get_gemini_client():
-    """Create Gemini client lazily."""
-
     if not gemini_api_key:
         return None
 
@@ -187,26 +175,14 @@ def _get_gemini_client():
 
     try:
         from google import genai
-
-        return genai.Client(
-            api_key=gemini_api_key
-        )
-
+        return genai.Client(api_key=gemini_api_key)
     except ImportError as exc:
         if "socksio" in str(exc).lower():
             return None
-
         raise
 
 
 def _check_with_gemini(prompt):
-    """
-    Run Gemini relevance analysis.
-
-    If Gemini is unavailable, rate-limited, or quota is exhausted,
-    return None immediately so the caller can use the next fallback.
-    """
-
     client = _get_gemini_client()
 
     if not gemini_api_key:
@@ -224,15 +200,11 @@ def _check_with_gemini(prompt):
             model="gemini-2.5-flash",
             contents=prompt,
         )
-
         return response.text
-
-    except Exception as e:
-
-        error_text = str(e).lower()
-
+    except Exception as exc:
+        error_text = str(exc).lower()
         is_rate_limited = (
-            "429" in str(e)
+            "429" in str(exc)
             or "rate" in error_text
             or "quota" in error_text
             or "resource_exhausted" in error_text
@@ -240,17 +212,12 @@ def _check_with_gemini(prompt):
         )
 
         if is_rate_limited:
-
             print(
                 "Gemini quota/rate limit reached. "
                 "Skipping Gemini retry and using fallback."
             )
-
         else:
-
-            print(
-                f"Gemini relevance check failed: {e}"
-            )
+            print(f"Gemini relevance check failed: {exc}")
 
         return None
 
@@ -262,9 +229,7 @@ def _check_with_openai(prompt):
     try:
         from openai import OpenAI
 
-        client = OpenAI(
-            api_key=openai_api_key
-        )
+        client = OpenAI(api_key=openai_api_key)
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -278,56 +243,33 @@ def _check_with_openai(prompt):
         )
 
         return response.choices[0].message.content
-
-    except Exception as e:
-
-        print(
-            f"OpenAI relevance check failed: {e}"
-        )
-
+    except Exception as exc:
+        print(f"OpenAI relevance check failed: {exc}")
         return None
 
 
 def _get_domain(url):
     url = url.lower()
-
-    url = re.sub(
-        r"^https?://",
-        "",
-        url,
-    )
-
+    url = re.sub(r"^https?://", "", url)
     return url.split("/")[0]
 
 
 def _contains_any(text, signals):
-    return any(
-        signal.lower() in text
-        for signal in signals
-    )
+    return any(signal.lower() in text for signal in signals)
 
 
 def _count_signals(text, signals):
-    return sum(
-        1
-        for signal in signals
-        if signal.lower() in text
-    )
+    return sum(1 for signal in signals if signal.lower() in text)
 
 
-def _get_geography_score(
-    url,
-    website_text,
-    target_geography,
-):
-    """
-    Determine geography relevance independently.
+def _contains_word(text, word):
+    return re.search(
+        rf"\b{re.escape(word.lower())}\b",
+        text.lower(),
+    ) is not None
 
-    This prevents a generic keyword such as "UAE" in the
-    search context from automatically making a website
-    geographically relevant.
-    """
 
+def _get_geography_score(url, website_text, target_geography):
     target = target_geography.lower().strip()
 
     aliases = GEOGRAPHY_ALIASES.get(
@@ -337,10 +279,8 @@ def _get_geography_score(
 
     url_lower = url.lower()
     text_lower = website_text.lower()
-
     domain = _get_domain(url)
 
-    # Strong domain-level evidence.
     if target == "uae" and domain.endswith(".ae"):
         return 30, "High"
 
@@ -350,7 +290,6 @@ def _get_geography_score(
     ):
         return 30, "High"
 
-    # Strong URL evidence.
     url_hits = sum(
         1
         for alias in aliases
@@ -360,14 +299,12 @@ def _get_geography_score(
     if url_hits >= 1:
         return 25, "High"
 
-    # Count evidence in actual website content.
     content_hits = sum(
         1
         for alias in aliases
         if alias in text_lower
     )
 
-    # Detect obvious competing geography.
     competing_geographies = {
         "uae": [
             ".co.uk",
@@ -389,10 +326,7 @@ def _get_geography_score(
         ],
     }
 
-    competing = competing_geographies.get(
-        target,
-        [],
-    )
+    competing = competing_geographies.get(target, [])
 
     competing_hits = sum(
         1
@@ -412,6 +346,85 @@ def _get_geography_score(
     return 0, "Low"
 
 
+def _get_industry_score(title, url, website_text, industry):
+    industry_lower = industry.lower().strip()
+    title_lower = title.lower()
+    url_lower = url.lower()
+    text_lower = website_text.lower()
+
+    title_url_text = " ".join([title_lower, url_lower])
+
+    if industry_lower == "sports":
+        aliases = [
+            "sports",
+            "sport",
+            "athletics",
+            "fitness",
+            "football",
+            "soccer",
+            "basketball",
+            "tennis",
+            "golf",
+            "running",
+        ]
+
+        competing_topics = [
+            "travel",
+            "tourism",
+            "hotel",
+            "destination",
+            "vacation",
+            "holiday",
+            "tour operator",
+            "travel company",
+        ]
+    else:
+        aliases = [industry_lower]
+        competing_topics = []
+
+    primary_hits = sum(
+        1
+        for alias in set(aliases)
+        if _contains_word(title_url_text, alias)
+    )
+
+    body_hits = sum(
+        1
+        for alias in set(aliases)
+        if _contains_word(text_lower, alias)
+    )
+
+    competing_primary_hits = sum(
+        1
+        for topic in competing_topics
+        if topic in title_url_text
+    )
+
+    competing_body_hits = sum(
+        1
+        for topic in competing_topics
+        if topic in text_lower
+    )
+
+    if (
+        primary_hits >= 1
+        and competing_primary_hits == 0
+    ):
+        return 45, "High"
+
+    if (
+        body_hits >= 3
+        and competing_primary_hits == 0
+        and competing_body_hits == 0
+    ):
+        return 45, "High"
+
+    if primary_hits >= 1 or body_hits >= 1:
+        return 25, "Medium"
+
+    return 0, "Low"
+
+
 def _check_with_heuristics(
     title,
     url,
@@ -419,115 +432,57 @@ def _check_with_heuristics(
     geography,
     website_text,
 ):
-    """
-    Conservative fallback scoring.
-
-    This function intentionally avoids giving a website 100
-    simply because it contains guest-post keywords.
-    """
-
     title_lower = title.lower()
     url_lower = url.lower()
     text_lower = website_text.lower()
 
-    combined = " ".join(
-        [
-            title_lower,
-            url_lower,
-            text_lower,
-        ]
-    )
-
-    # ---------------------------------------------------------
-    # 1. Reject obvious marketplaces / agencies / aggregators
-    # ---------------------------------------------------------
-
-    if _contains_any(
-        combined,
-        MARKETPLACE_SIGNALS,
-    ):
-        return (
-            "Relevance score: 0\n"
-            "Industry match: Low\n"
-            "Geography match: Low\n"
-            "Guest post potential: Low\n"
-            "Analysis method: Heuristic\n"
-            "Reason: This website appears to be an SEO or guest-post marketplace rather than a publisher."
-        )
-
-    if _contains_any(
-        combined,
-        AGGREGATOR_SIGNALS,
-    ):
-        return (
-            "Relevance score: 0\n"
-            "Industry match: Low\n"
-            "Geography match: Low\n"
-            "Guest post potential: Low\n"
-            "Analysis method: Heuristic\n"
-            "Reason: This website appears to aggregate guest-post opportunities rather than publish content directly."
-        )
-
-    if _contains_any(
+    combined = " ".join([
+        title_lower,
         url_lower,
-        LOW_QUALITY_SIGNALS,
-    ):
+        text_lower,
+    ])
+
+    if _contains_any(combined, MARKETPLACE_SIGNALS):
+        return (
+            "Relevance score: 10\n"
+            "Industry match: Low\n"
+            "Geography match: Low\n"
+            "Guest post potential: Low\n"
+            "Analysis method: Heuristic\n"
+            "Reason: This website appears to be an SEO or "
+            "guest-post marketplace rather than a publisher."
+        )
+
+    if _contains_any(combined, AGGREGATOR_SIGNALS):
         return (
             "Relevance score: 0\n"
             "Industry match: Low\n"
             "Geography match: Low\n"
             "Guest post potential: Low\n"
             "Analysis method: Heuristic\n"
-            "Reason: This appears to be a third-party marketplace or distribution platform rather than a target publisher."
+            "Reason: This website appears to aggregate "
+            "guest-post opportunities rather than publish "
+            "content directly."
         )
 
-    # ---------------------------------------------------------
-    # 2. Industry scoring
-    # ---------------------------------------------------------
-
-    industry_lower = industry.lower()
-
-    industry_aliases = [
-        industry_lower,
-    ]
-
-    if industry_lower == "sports":
-        industry_aliases.extend(
-            [
-                "sports",
-                "sport",
-                "athletics",
-                "fitness",
-                "football",
-                "soccer",
-                "basketball",
-                "tennis",
-                "golf",
-                "running",
-            ]
+    if _contains_any(url_lower, LOW_QUALITY_SIGNALS):
+        return (
+            "Relevance score: 0\n"
+            "Industry match: Low\n"
+            "Geography match: Low\n"
+            "Guest post potential: Low\n"
+            "Analysis method: Heuristic\n"
+            "Reason: This appears to be a third-party "
+            "marketplace or distribution platform rather "
+            "than a target publisher."
         )
 
-    industry_hits = sum(
-        1
-        for signal in set(industry_aliases)
-        if signal in combined
+    industry_score, industry_match = _get_industry_score(
+        title,
+        url,
+        website_text,
+        industry,
     )
-
-    if industry_hits >= 3:
-        industry_score = 40
-        industry_match = "High"
-
-    elif industry_hits >= 1:
-        industry_score = 25
-        industry_match = "Medium"
-
-    else:
-        industry_score = 0
-        industry_match = "Low"
-
-    # ---------------------------------------------------------
-    # 3. Geography scoring
-    # ---------------------------------------------------------
 
     geography_score, geography_match = _get_geography_score(
         url,
@@ -535,30 +490,20 @@ def _check_with_heuristics(
         geography,
     )
 
-    # ---------------------------------------------------------
-    # 4. Guest-post scoring
-    # ---------------------------------------------------------
-
     guest_post_hits = _count_signals(
         combined,
         GUEST_POST_SIGNALS,
     )
 
     if guest_post_hits >= 3:
-        guest_score = 20
+        guest_score = 30
         guest_potential = "High"
-
     elif guest_post_hits >= 1:
         guest_score = 12
         guest_potential = "Medium"
-
     else:
         guest_score = 0
         guest_potential = "Low"
-
-    # ---------------------------------------------------------
-    # 5. Publisher quality
-    # ---------------------------------------------------------
 
     publisher_score = 0
 
@@ -581,10 +526,6 @@ def _check_with_heuristics(
         10,
     )
 
-    # ---------------------------------------------------------
-    # 6. Final score
-    # ---------------------------------------------------------
-
     score = (
         industry_score
         + geography_score
@@ -592,63 +533,52 @@ def _check_with_heuristics(
         + publisher_score
     )
 
-    score = min(
-        score,
-        100,
-    )
-
-    # Strong geographic mismatch should prevent qualification.
-    if geography_match == "Low":
-        score = min(
-            score,
-            59,
-        )
+    score = min(score, 100)
 
     if industry_match == "Low":
-        score = min(
-            score,
-            39,
-        )
+        score = min(score, 39)
 
     if guest_potential == "Low":
-        score = min(
-            score,
-            49,
-        )
-
-    # ---------------------------------------------------------
-    # 7. Reason
-    # ---------------------------------------------------------
+        score = min(score, 49)
 
     if geography_match == "Low":
         reason = (
-            "The website may match the industry and guest-post criteria, "
-            "but it lacks a meaningful connection to the target geography."
+            "The website may match the industry and guest-post "
+            "criteria, but it lacks a meaningful connection to "
+            "the target geography."
         )
-
     elif industry_match == "Low":
         reason = (
-            "The website does not have a strong enough connection to the target industry."
+            "The website does not have a strong enough "
+            "connection to the target industry."
         )
-
     elif guest_potential == "Low":
         reason = (
-            "The website is relevant to the target audience but does not show clear guest-post opportunities."
+            "The website is relevant to the target audience but "
+            "does not show clear guest-post opportunities."
         )
-
-    elif geography_match == "High" and industry_match == "High":
+    elif (
+        geography_match == "High"
+        and industry_match == "High"
+    ):
         reason = (
-            "The website strongly matches the target industry and geography and shows clear guest-post signals."
+            "The website strongly matches the target industry "
+            "and geography and shows clear guest-post signals."
         )
-
-    elif geography_match == "High":
+    elif (
+        geography_match == "High"
+        and industry_match == "Medium"
+    ):
         reason = (
-            "The website has a strong geographic connection and shows guest-post potential, but industry relevance is limited."
+            "The website has a strong geographic connection and "
+            "clear guest-post potential, but the target industry "
+            "appears to be a secondary topic."
         )
-
     else:
         reason = (
-            "The website shows some industry and guest-post relevance, but the match is not strong enough."
+            "The website shows some industry, geography, and "
+            "guest-post relevance, but the overall match is "
+            "not equally strong across all criteria."
         )
 
     return (
@@ -662,22 +592,38 @@ def _check_with_heuristics(
 
 
 def _parse_result(result):
-    """
-    Normalizes AI output and ensures all fields use valid values.
-    """
-
     if not result:
         return None
 
     result = result.strip()
 
-    # AI occasionally returns numbered output.
     result = re.sub(
         r"^\s*\d+\.\s*",
         "",
         result,
         flags=re.MULTILINE,
     )
+
+    if not re.search(
+        r"Analysis method:\s*(AI|Heuristic|Unavailable)",
+        result,
+        re.IGNORECASE,
+    ):
+        reason_match = re.search(
+            r"\nReason:",
+            result,
+            re.IGNORECASE,
+        )
+
+        if reason_match:
+            insert_at = reason_match.start()
+            result = (
+                result[:insert_at]
+                + "\nAnalysis method: AI"
+                + result[insert_at:]
+            )
+        else:
+            result += "\nAnalysis method: AI"
 
     return result
 
@@ -689,15 +635,6 @@ def check_website_relevance(
     geography,
     website_text,
 ):
-    """
-    Evaluate website relevance.
-
-    Priority:
-        1. Gemini
-        2. OpenAI
-        3. Conservative heuristic fallback
-    """
-
     prompt = _build_prompt(
         title,
         url,
@@ -706,7 +643,6 @@ def check_website_relevance(
         website_text,
     )
 
-    # Explicit heuristic mode.
     if ai_provider == "heuristic":
         return _check_with_heuristics(
             title,
@@ -716,12 +652,7 @@ def check_website_relevance(
             website_text,
         )
 
-    # ---------------------------------------------------------
-    # No API keys
-    # ---------------------------------------------------------
-
     if not gemini_api_key and not openai_api_key:
-
         print(
             "Neither GEMINI_API_KEY nor OPENAI_API_KEY is set."
         )
@@ -734,44 +665,27 @@ def check_website_relevance(
             website_text,
         )
 
-    # ---------------------------------------------------------
-    # Gemini
-    # ---------------------------------------------------------
-
-    result = _check_with_gemini(
-        prompt
-    )
-
-    if result:
-        return _parse_result(
-            result
-        )
-
-    # ---------------------------------------------------------
-    # OpenAI
-    # ---------------------------------------------------------
-
-    if ai_provider != "gemini":
-
-        print(
-            "Falling back to OpenAI for relevance analysis..."
-        )
-
-        result = _check_with_openai(
-            prompt
-        )
+    if ai_provider in ("auto", "gemini"):
+        result = _check_with_gemini(prompt)
 
         if result:
-            return _parse_result(
-                result
+            return _parse_result(result)
+
+    if ai_provider in ("auto", "openai"):
+
+        if ai_provider == "auto":
+            print(
+                "Falling back to OpenAI for relevance analysis..."
             )
 
-    # ---------------------------------------------------------
-    # Heuristic fallback
-    # ---------------------------------------------------------
+        result = _check_with_openai(prompt)
+
+        if result:
+            return _parse_result(result)
 
     print(
-        "Falling back to conservative heuristic relevance analysis..."
+        "Falling back to conservative heuristic "
+        "relevance analysis..."
     )
 
     return _check_with_heuristics(
